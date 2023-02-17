@@ -1,4 +1,5 @@
-const {expect} = require('chai')
+import {expect} from 'chai';
+
 describe('Math operations', () => {
   const  a = 5
   const  b = 7
