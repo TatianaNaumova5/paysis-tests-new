@@ -1,0 +1,27 @@
+{
+  "name": "paysis-tests-new",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --config .mocharc.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TatianaNaumova5/paysis-tests-new.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TatianaNaumova5/paysis-tests-new/issues"
+  },
+  "homepage": "https://github.com/TatianaNaumova5/paysis-tests-new#readme",
+  "dependencies": {
+    "chai": "^4.3.7",
+    "mocha": "^10.2.0"
+  },
+  "devDependencies": {
+    "prettier": "^2.8.4"
+  }
+}
