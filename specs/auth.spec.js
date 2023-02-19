@@ -39,4 +39,12 @@ describe('Authentication negative', () => {
       .send({login: 'admin888', password: 'admin'})
     await expect(response.body.message).to.eq('Wrong login or password.')
   })
+
+  it('Log in with wrong login', async ()=> {
+    const response = await request('http://localhost:3000')
+      .post('/auth')
+      .send({login: 'admin888', password: 'admin'})
+    await expect(response.body.token).to.be.null
+  })
+
 })
