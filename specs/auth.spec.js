@@ -23,6 +23,7 @@ describe('Authentication positive', () => {
   })
 })
 
+
 describe('Authentication negative', () => {
   it('Log in with wrong login', async ()=> {
     const response = await request('http://localhost:3000')
