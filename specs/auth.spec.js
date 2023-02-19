@@ -44,7 +44,7 @@ describe('Authentication negative', () => {
     const response = await request('http://localhost:3000')
       .post('/auth')
       .send({login: 'admin888', password: 'admin'})
-    await expect(response.body.token).to.be.null
+    await expect(response.body.token).to.be.undefined
   })
 
 })
