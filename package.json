@@ -4,14 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --config .mocharc.js"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/TatianaNaumova5/paysis-tests-new.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Tatiana Naumova",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/TatianaNaumova5/paysis-tests-new/issues"

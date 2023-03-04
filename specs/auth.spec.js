@@ -1,7 +1,6 @@
 import {expect} from 'chai';
 import request from 'supertest';
 describe('Authentication positive', () => {
-  before()
   it('Successful log in', async ()=> {
     const response = await request('http://localhost:3000')
       .post('/auth')
@@ -16,7 +15,7 @@ describe('Authentication positive', () => {
       await expect(response.body.token).not.to.be.null
     })
 
-  it('Successful log in', async ()=> {
+  it('Successful log in token is a string', async ()=> {
     const response = await request('http://localhost:3000')
       .post('/auth')
       .send({login: 'admin', password: 'admin'})
@@ -33,7 +32,6 @@ describe('Authentication negative', () => {
     await expect(response.statusCode).to.eq(404)
   })
 
-
   it('Log in with wrong login', async ()=> {
     const response = await request('http://localhost:3000')
       .post('/auth')
@@ -48,4 +46,10 @@ describe('Authentication negative', () => {
     await expect(response.body.token).to.be.undefined
   })
 
+  it('Uncceassful log in with wrong end point', async ()=> {
+    const response = await request('http://localhost:3000')
+      .post('/auth111')
+      .send({login: 'admin', password: 'admin'})
+    await expect(response.statusCode).to.eq(404)
+  })
 })
