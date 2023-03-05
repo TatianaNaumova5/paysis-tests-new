@@ -7,7 +7,6 @@
     "test": "mocha",
     "format": "prettier . --write --list-different",
     "lint": "prettier . --check"
-
   },
   "repository": {
     "type": "git",
