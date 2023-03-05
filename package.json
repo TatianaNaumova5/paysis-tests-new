@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "format": "prettier . --write --list-different",
+    "lint": "prettier . --check"
+
   },
   "repository": {
     "type": "git",
@@ -24,6 +27,7 @@
     "@babel/preset-env": "^7.20.2",
     "@babel/register": "^7.18.9",
     "chai": "^4.3.7",
+    "dotenv": "^16.0.3",
     "mocha": "^10.2.0",
     "supertest": "^6.3.3"
   },
