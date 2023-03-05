@@ -23,27 +23,41 @@ describe('Authentication positive', () => {
       .send({login: process.env.LOGIN, password: process.env.PASSWORD})
     await expect(response.body.token).to.be.a('string')
   })
+
+  it('Successful log in token is not a number', async () => {
+    const response = await request(process.env.BASE_URL)
+      .post('/auth')
+      .send({login: process.env.LOGIN, password: process.env.PASSWORD})
+    await expect(response.body.token).not.to.be.a('number')
+  })
 })
 
 describe('Authentication negative', () => {
   it('Log in with wrong login', async () => {
     const response = await request(process.env.BASE_URL)
       .post('/auth')
-      .send({login: 'admin888', password: process.env.PASSWORD})
+      .send({login: 'test123', password: process.env.PASSWORD})
+    await expect(response.statusCode).to.eq(404)
+  })
+
+  it('Log in with wrong password', async () => {
+    const response = await request(process.env.BASE_URL)
+      .post('/auth')
+      .send({login: process.env.LOGIN, password: 'test123'})
     await expect(response.statusCode).to.eq(404)
   })
 
   it('Log in with wrong login', async () => {
     const response = await request(process.env.BASE_URL)
       .post('/auth')
-      .send({login: 'admin888', password: process.env.PASSWORD})
+      .send({login: 'test123', password: process.env.PASSWORD})
     await expect(response.body.message).to.eq('Wrong login or password.')
   })
 
   it('Log in with wrong login', async () => {
     const response = await request(process.env.BASE_URL)
       .post('/auth')
-      .send({login: 'admin888', password: process.env.PASSWORD})
+      .send({login: 'test123', password: process.env.PASSWORD})
     await expect(response.body.token).to.be.undefined
   })
 
