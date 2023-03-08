@@ -3,32 +3,30 @@ import request from 'supertest'
 import 'dotenv/config'
 
 describe('Authentication positive', () => {
-  it('Successful log in', async () => {
-    const response = await request(process.env.BASE_URL)
-      .post('/auth')
-      .send({login: process.env.LOGIN, password: process.env.PASSWORD})
-    await expect(response.statusCode).to.eq(200)
-  })
+  describe('Succesful log in', ()=>{
+    let response
 
-  it('Successful log in', async () => {
-    const response = await request(process.env.BASE_URL)
-      .post('/auth')
-      .send({login: process.env.LOGIN, password: process.env.PASSWORD})
-    await expect(response.body.token).not.to.be.null
-  })
+    before(async  () =>{
+      response = await request(process.env.BASE_URL)
+        .post('/auth')
+        .send({login: process.env.LOGIN, password: process.env.PASSWORD})
+    })
 
-  it('Successful log in token is a string', async () => {
-    const response = await request(process.env.BASE_URL)
-      .post('/auth')
-      .send({login: process.env.LOGIN, password: process.env.PASSWORD})
-    await expect(response.body.token).to.be.a('string')
-  })
+    it('Response status code is 200',  () => {
+      expect(response.statusCode).to.eq(200)
+    })
 
-  it('Successful log in token is not a number', async () => {
-    const response = await request(process.env.BASE_URL)
-      .post('/auth')
-      .send({login: process.env.LOGIN, password: process.env.PASSWORD})
-    await expect(response.body.token).not.to.be.a('number')
+    it('Response body returnes a token',  () => {
+      expect(response.body.token).not.to.be.null
+    })
+
+    it('Response body returnes a token',  () => {
+      expect(response.body.token).to.be.a('string')
+    })
+
+    it('Successful log in token is not a number', () => {
+      expect(response.body.token).not.to.be.a('number')
+    })
   })
 })
 
