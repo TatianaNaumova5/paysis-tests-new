@@ -1,14 +1,12 @@
-import request from 'supertest';
 import {expect} from 'chai';
-
+import {user} from '../helpers'
 describe('User',()=>{
   describe('Create new user', ()=>{
     let response
 
     before(async ()=>{
-      response = await request(process.env.BASE_URL)
-        .post('/users')
-        .set('Authorization',`Bearer${process.env.TOKEN}`)
+      response = await user.create()
+
     })
 
     it('Response status code 200',  ()=> {
@@ -19,7 +17,7 @@ describe('User',()=>{
       expect(response.body.id).to.be.a('string')
     })
 
-      it('Response body returns initial user amount',  ()=> {
+    it('Response body returns initial user amount',  ()=> {
        expect(response.body.amount).to.be.a('number')
     })
   })
