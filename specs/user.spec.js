@@ -64,4 +64,78 @@ describe('User',()=> {
       })
     })
   })
+
+  describe('Get user', () => {
+    describe('By correct id', ()=>{
+      let create
+      let response
+
+      before(async () => {
+        create = await user.create()
+        response = await user.get(create.body.id)
+      })
+
+      it('Response status code 200', () => {
+        expect(response.statusCode).to.eq(200)
+      })
+
+      it('Response body returns a user id', () => {
+        expect(response.body.id).to.eq(create.body.id)
+      })
+
+      it('Response body returns initial user amount', () => {
+        expect(response.body.amount).to.eq(create.body.amount)
+      })
+    })
+
+    describe('By incorrect id', ()=>{
+      let response
+
+      before(async () => {
+        await user.create()
+        response = await user.get('incorrect')
+      })
+
+      it('Response status code 400', () => {
+        expect(response.statusCode).to.eq(400)
+      })
+
+      it('Response body returns an error message', () => {
+        expect(response.body.message).to.eq('No user found.')
+      })
+
+      it('Response body returns an error message', () => {
+        expect(response.body.message).to.be.a('string')
+      })
+    })
+
+    describe('All', ()=>{
+      let response
+
+      before(async () => {
+        await user.create()
+        response = await user.get()
+      })
+
+      it('Response status code 200', () => {
+        expect(response.statusCode).to.eq(200)
+      })
+
+      it('Response body returns users array', () => {
+        expect(response.body.length).to.be.at.least(1)
+      })
+
+      it('Response body returns a user id in each object', () => {
+        for (let user of response.body){
+          expect(user.id).to.be.a('string')
+        }
+      })
+
+      it('Response body returns initial user amount in each object', () => {
+        for (let user of response.body){
+          expect(user.amount).to.be.a('number')
+        }
+      })
+    })
+  })
 })
