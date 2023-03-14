@@ -82,5 +82,25 @@ describe('Transactions', ()=>{
         expect(response.body.amount).to.eq(amount)
       })
     })
+
+    describe('By incorrect id', () => {
+      let response
+
+      before(async ()=>{
+        response = await transaction.get('incorrect')
+      })
+
+      it('Response status code 400', () => {
+        expect(response.statusCode).to.eq(400)
+      })
+
+      it('Response body contains error message', () => {
+        expect(response.body.message).to.eq('No transaction found.')
+      })
+
+      it('Response body contains error message', () => {
+        expect(response.body.message).to.be.a('string')
+      })
+    })
   })
 })
