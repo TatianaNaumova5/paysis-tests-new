@@ -46,4 +46,41 @@ describe('Transactions', ()=>{
       })
     })
   })
+
+  describe('Get', ()=> {
+    describe('By correct id', () => {
+      let from
+      let to
+      let transactionId
+      let response
+      const amount = 100
+
+      before(async ()=>{
+        from = (await user.create()).body.id
+        to = (await user.create()).body.id
+       transactionId = (await transaction.create(from, to, amount)).body.id
+        response = await transaction.get(transactionId)
+      })
+
+      it('Response status code 200', () => {
+        expect(response.statusCode).to.eq(200)
+      })
+
+      it('Response body contains transaction id', () => {
+        expect(response.body.id).to.eq(transactionId)
+      })
+
+      it('Response body contains sender id', () => {
+        expect(response.body.from).to.eq(from)
+      })
+
+      it('Response body contains receiver id', () => {
+        expect(response.body.to).to.eq(to)
+      })
+
+      it('Response body contains amount', () => {
+        expect(response.body.amount).to.eq(amount)
+      })
+    })
+  })
 })
