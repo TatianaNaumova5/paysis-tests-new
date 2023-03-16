@@ -1,5 +1,5 @@
 import {client} from '../client';
 
-export async function patch(number, amount){
+export async function patch(entries, amount){
   return client.patch('/config').set('Authorization', `Bearer ${process.env.TOKEN}`)
-    .send(number, amount)}
+    .send(entries, amount)}
