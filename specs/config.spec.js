@@ -59,21 +59,7 @@ describe('Patch config', async ()=> {
       expect(response.body.initial_amount).to.be.a('number')
     })
 
-    describe.skip('Not number', () => {
-      let response
-      let entries = 'no'
-
-      before(async function () {
-        response = await config.patch(entries)
-      })
-
-      it('Should return status code 400', () => {
-        expect(response.statusCode).equal(400)
-      })
-
-      it('Response should contain error message', () => {
-        expect(response.body.message).equal('Invalid number of entries.')
-      })
     })
-  })
-})
+    })
+
+

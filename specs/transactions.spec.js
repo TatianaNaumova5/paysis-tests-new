@@ -45,6 +45,37 @@ describe('Transactions', ()=> {
         await expect(body.amount).to.eq(receiver.amount + amount)
       })
     })
+
+    describe('With incorrect data', () => {
+      let sender
+      let receiver
+      let response
+      const amount = 100
+
+      before(async () => {
+        sender = (await user.create()).body // distructive prisvoenie
+        receiver = (await user.create()).body
+        // response = await transaction.create(sender.id, receiver.id, amount)
+      })
+
+      it('With incorrect receiver id', async () => {
+        response = await transaction.create(sender.id, 'incorrect', amount)
+        expect(response.statusCode).to.eq(400)
+        expect(response.body.message).to.eq('Receiver not found.')
+      })
+
+      it('With incorrect sender id', async () => {
+        response = await transaction.create('incorrect', receiver.id, amount)
+        expect(response.statusCode).to.eq(400)
+        expect(response.body.message).to.eq('Sender not found.')
+      })
+
+      it('With incorrect amount', async () => {
+        response = await transaction.create(sender.id, receiver.id, 'incorrect')
+        expect(response.statusCode).to.eq(400)
+        expect(response.body.message).to.eq('Invalid amount to send.')
+      })
+    })
   })
 
   describe('Get', () => {
