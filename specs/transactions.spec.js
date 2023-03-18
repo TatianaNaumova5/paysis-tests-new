@@ -1,18 +1,18 @@
 import {user, transaction} from '../helpers'
 import {expect} from 'chai';
 
-describe('Transactions', ()=>{
-  describe('Create', ()=>{
-    describe('With correct data', ()=> {
+describe('Transactions', ()=> {
+  describe('Create', () => {
+    describe('With correct data', () => {
       let sender
       let receiver
       let response
       const amount = 100
 
-      before(async ()=>{
-        sender = (await  user.create()).body // distructive prisvoenie
-        receiver = (await  user.create()).body
-        response = await  transaction.create(sender.id, receiver.id, amount)
+      before(async () => {
+        sender = (await user.create()).body // distructive prisvoenie
+        receiver = (await user.create()).body
+        response = await transaction.create(sender.id, receiver.id, amount)
       })
 
       it('Response status code is 200', () => {
@@ -35,19 +35,19 @@ describe('Transactions', ()=>{
         expect(response.body.amount).to.eq(amount)
       })
 
-      it('Sender\'s balance has decreased', async ()=>{
+      it('Sender\'s balance has decreased', async () => {
         const {body} = await user.get(sender.id)
         await expect(body.amount).to.eq(sender.amount - amount)
       })
 
-      it('Receiver\'s balance has increased', async ()=>{
+      it('Receiver\'s balance has increased', async () => {
         const {body} = await user.get(receiver.id)
         await expect(body.amount).to.eq(receiver.amount + amount)
       })
     })
   })
 
-  describe('Get', ()=> {
+  describe('Get', () => {
     describe('By correct id', () => {
       let from
       let to
@@ -55,10 +55,10 @@ describe('Transactions', ()=>{
       let response
       const amount = 100
 
-      before(async ()=>{
+      before(async () => {
         from = (await user.create()).body.id
         to = (await user.create()).body.id
-       transactionId = (await transaction.create(from, to, amount)).body.id
+        transactionId = (await transaction.create(from, to, amount)).body.id
         response = await transaction.get(transactionId)
       })
 
@@ -86,7 +86,7 @@ describe('Transactions', ()=>{
     describe('By incorrect id', () => {
       let response
 
-      before(async ()=>{
+      before(async () => {
         response = await transaction.get('incorrect')
       })
 
@@ -100,6 +100,42 @@ describe('Transactions', ()=>{
 
       it('Response body contains error message', () => {
         expect(response.body.message).to.be.a('string')
+      })
+    })
+
+    describe('Get All transactions', () => {
+      let from
+      let to
+      let transactionId
+      let response
+      const amount = 100
+
+      before(async () => {
+        from = (await user.create()).body.id
+        to = (await user.create()).body.id
+        transactionId = (await transaction.create(from, to, amount)).body.id
+        transactionId = (await transaction.create(from, to, amount)).body.id
+        response = await transaction.get()
+      })
+
+      it('Response status code 200', () => {
+        expect(response.statusCode).to.eq(200)
+      })
+
+      it('Response body contains array of at least 2 transactions', function () {
+        expect(response.body.length).to.be.at.least(2)
+      })
+
+      it('Transactions in response body contain user id', function () {
+        for (let transaction of response.body) {
+          expect(transaction.id).to.be.a('string')
+        }
+      })
+
+      it('Transactions in response body contain amount', function () {
+        for (let transaction of response.body) {
+          expect(transaction.amount).to.be.a('number')
+        }
       })
     })
   })
