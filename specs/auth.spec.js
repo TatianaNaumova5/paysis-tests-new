@@ -66,7 +66,7 @@ describe('Authentication positive', () => {
     })
   })
 
-  describe('Log in without credentials', ()=> {
+  describe('Attempt to log in without credentials', ()=> {
     let response
 
     before(async () => {

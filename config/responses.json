@@ -1,0 +1,32 @@
+{
+  "auth": {
+    "correct": {
+       "token": "e6ff1560-6600-49a6-8188-8a049cf5f35d"
+    },
+     "empty": {
+       "message": "No credentials provided."
+     }
+  },
+  "users": {
+    "user": {
+      "id": "41c23e61-a9c3-4280-88ee-a839317a112e",
+      "amount": 1000
+    },
+    "notFound": {
+      "message": "No user found."
+    },
+    "delete": {
+        "message": "User deleted."
+    },
+      "all": [
+        {
+            "id": "d8252134-e60f-459b-92e9-3e564e402355",
+             "amount": 1000
+        },
+        {
+             "id": "b55c074b-0ae6-4dcf-b229-df25c760d873",
+             "amount": 1000
+        }
+      ]
+  }
+}
